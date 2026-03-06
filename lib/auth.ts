@@ -10,7 +10,7 @@ export type Profile = {
 };
 
 export async function requireSuperadmin() {
-  const supabase = getSupabaseServerClient();
+  const supabase = await getSupabaseServerClient();
 
   const {
     data: { user },
