@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Admin Area for Supabase Database
+
+A Next.js admin dashboard with Google authentication and superadmin access control.
+
+## Features
+
+- 🔐 Google OAuth authentication via Supabase
+- 🛡️ Superadmin-only access (requires `profiles.is_superadmin == true`)
+- 📊 Dashboard with statistics (users, images, captions, activity)
+- 👥 User/Profile management (read-only)
+- 🖼️ Image management (full CRUD)
+- 💬 Caption viewing (read-only)
+
+## Setup
+
+### Environment Variables
+
+Set these in Vercel (or `.env.local` for local development):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://qihsgnfjqmkjmoowyfbn.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHNnbmZqcW1ram1vb3d5ZmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1Mjc0MDAsImV4cCI6MjA2NTEwMzQwMH0.c9UQS_o2bRygKOEdnuRx7x7PeSf_OUGDtf9l3fMqMSQ
+```
+
+### Setting Up Your First Superadmin
+
+**Important:** Since all routes require `profiles.is_superadmin == true`, you need to set yourself as a superadmin before you can log in.
+
+1. Log in to your Supabase dashboard
+2. Go to the SQL Editor
+3. Run this query (replace `YOUR_EMAIL@example.com` with your Google account email):
+
+```sql
+-- First, find your user ID after logging in once, or insert directly:
+UPDATE profiles 
+SET is_superadmin = true 
+WHERE email = 'YOUR_EMAIL@example.com';
+
+-- Or if you know the user ID:
+UPDATE profiles 
+SET is_superadmin = true 
+WHERE id = 'USER_ID_HERE';
+```
+
+Alternatively, you can use the Supabase dashboard's Table Editor to manually set `is_superadmin = true` for your profile.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) - it will redirect to `/admin` which requires authentication.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` - Redirects to `/admin`
+- `/login` - Google OAuth login page
+- `/admin` - Dashboard with statistics
+- `/admin/users` - View all user profiles
+- `/admin/images` - Manage images (CRUD)
+- `/admin/captions` - View all captions
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All `/admin/*` routes are protected and require superadmin access.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub
+2. Import project in Vercel
+3. Add environment variables in Vercel settings
+4. Turn off "Deployment Protection" in Vercel project settings to allow incognito access
+5. Deploy!
