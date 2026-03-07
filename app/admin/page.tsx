@@ -3,9 +3,22 @@ import { requireSuperadmin } from "@/lib/auth";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
-  const { profile } = await requireSuperadmin();
-  const supabase = await getSupabaseServerClient();
+  let profile, supabase;
+  try {
+    const authResult = await requireSuperadmin();
+    profile = authResult.profile;
+    supabase = await getSupabaseServerClient();
+  } catch (error: any) {
+    // If env vars are missing or auth fails, redirect to login
+    if (error?.message?.includes("Missing NEXT_PUBLIC_SUPABASE")) {
+      redirect("/login?error=config");
+    }
+    redirect("/login");
+  }
 
   // Fetch statistics
   const [usersResult, imagesResult, captionsResult] = await Promise.all([

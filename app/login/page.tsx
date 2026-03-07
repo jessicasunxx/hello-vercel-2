@@ -47,6 +47,12 @@ function LoginInner() {
           </div>
         )}
 
+        {error === "config" && (
+          <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+            Configuration error: Missing Supabase environment variables. Please check your Vercel project settings.
+          </div>
+        )}
+
         <button
           type="button"
           onClick={handleLogin}
