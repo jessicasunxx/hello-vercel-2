@@ -7,16 +7,18 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
+  // Check environment variables first before attempting any Supabase operations
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    redirect("/login?error=config");
+  }
+
   let profile, supabase;
   try {
     const authResult = await requireSuperadmin();
     profile = authResult.profile;
     supabase = await getSupabaseServerClient();
   } catch (error: any) {
-    // If env vars are missing or auth fails, redirect to login
-    if (error?.message?.includes("Missing NEXT_PUBLIC_SUPABASE")) {
-      redirect("/login?error=config");
-    }
+    // If auth fails, redirect to login
     redirect("/login");
   }
 
