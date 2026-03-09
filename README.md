@@ -22,6 +22,47 @@ NEXT_PUBLIC_SUPABASE_URL=https://qihsgnfjqmkjmoowyfbn.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHNnbmZqcW1ram1vb3d5ZmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1Mjc0MDAsImV4cCI6MjA2NTEwMzQwMH0.c9UQS_o2bRygKOEdnuRx7x7PeSf_OUGDtf9l3fMqMSQ
 ```
 
+
+### Your exact values (from this project)
+
+If you want to paste values directly in Vercel:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://qihsgnfjqmkjmoowyfbn.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHNnbmZqcW1ram1vb3d5ZmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1Mjc0MDAsImV4cCI6MjA2NTEwMzQwMH0.c9UQS_o2bRygKOEdnuRx7x7PeSf_OUGDtf9l3fMqMSQ
+```
+
+Alternative (if you only have project ID + anon key):
+
+```
+SUPABASE_PROJECT_ID=qihsgnfjqmkjmoowyfbn
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpaHNnbmZqcW1ram1vb3d5ZmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1Mjc0MDAsImV4cCI6MjA2NTEwMzQwMH0.c9UQS_o2bRygKOEdnuRx7x7PeSf_OUGDtf9l3fMqMSQ
+```
+
+### How to add Supabase to Vercel (step-by-step)
+
+1. Open **Supabase Dashboard** → your project → **Project Settings** → **API**.
+2. Copy:
+   - **Project URL**
+   - **anon public** key
+3. In **Vercel** → your project → **Settings** → **Environment Variables** → **Add Environment Variable**.
+4. Add these variables (recommended):
+   - `NEXT_PUBLIC_SUPABASE_URL` = your Supabase Project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = your Supabase anon public key
+5. Select environments for both vars: **Production**, **Preview**, and **Development**.
+6. Click **Save** for each variable.
+7. Go to **Deployments** and click **Redeploy** on the latest deployment.
+
+Also verify Supabase OAuth settings:
+
+- **Supabase** → **Authentication** → **URL Configuration**
+  - **Site URL**: `https://YOUR-PROJECT.vercel.app`
+  - **Redirect URLs** (add both):
+    - `https://YOUR-PROJECT.vercel.app/auth/callback`
+    - `http://localhost:3000/auth/callback`
+
+If your Vercel app still shows `?error=config`, double-check there are no typos/spaces in variable names.
+
 ### Setting Up Your First Superadmin
 
 **Important:** Since all routes require `profiles.is_superadmin == true`, you need to set yourself as a superadmin before you can log in.
@@ -43,6 +84,18 @@ WHERE id = 'USER_ID_HERE';
 ```
 
 Alternatively, you can use the Supabase dashboard's Table Editor to manually set `is_superadmin = true` for your profile.
+
+
+### If you see `/login?error=config`
+
+This means the deployment cannot read Supabase credentials.
+
+In **Vercel → Project → Settings → Environment Variables**, set one of these pairs:
+
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- or `SUPABASE_URL` and `SUPABASE_ANON_KEY`
+
+Then click **Redeploy** for the latest deployment.
 
 ## Getting Started
 

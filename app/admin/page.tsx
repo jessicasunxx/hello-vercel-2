@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { requireSuperadmin } from "@/lib/auth";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { getSupabaseServerClient, hasSupabaseEnv } from "@/lib/supabase/server";
 import Link from "next/link";
 
 // Force dynamic rendering to prevent static generation issues
@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   // Check environment variables first before attempting any Supabase operations
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  if (!hasSupabaseEnv()) {
     redirect("/login?error=config");
   }
 
