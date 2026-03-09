@@ -71,3 +71,25 @@ All `/admin/*` routes are protected and require superadmin access.
 3. Add environment variables in Vercel settings
 4. Turn off "Deployment Protection" in Vercel project settings to allow incognito access
 5. Deploy!
+
+## Troubleshooting `404: NOT_FOUND` on Vercel
+
+If Vercel shows a plain `404: NOT_FOUND` page (instead of this app's styled 404 page), the deployment is usually not serving your Next.js app correctly.
+
+Check these in order:
+
+1. **Framework Preset** is set to **Next.js** in Vercel project settings.
+2. **Root Directory** points to the repo root (`.`), not a different folder.
+3. **Build Command** is `next build` (or default) and **Output Directory** is empty/default for Next.js.
+4. Open **Deployments → latest deployment → Build Logs** and confirm the build completed successfully.
+5. Confirm the deployment is from the expected branch/commit and that `app/page.tsx` exists in that commit.
+6. This repo now includes a `vercel.json` that explicitly pins the framework to `nextjs` to reduce auto-detection mistakes.
+7. After changing settings, click **Redeploy**.
+
+Quick validation commands before pushing:
+
+```bash
+npm install
+npm run lint
+npm run build
+```
