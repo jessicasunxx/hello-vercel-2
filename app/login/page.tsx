@@ -1,31 +1,12 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 function LoginInner() {
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(false);
   const error = searchParams.get("error");
-
-  const handleLogin = async () => {
-    const supabase = getSupabaseBrowserClient();
-    setLoading(true);
-    try {
-      const origin =
-        typeof window !== "undefined" ? window.location.origin : "";
-
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${origin}/auth/callback`,
-        },
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const reason = searchParams.get("reason");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-950 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
@@ -53,11 +34,39 @@ function LoginInner() {
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={handleLogin}
-          disabled={loading}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-sky-500 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-sky-500/40 transition hover:bg-sky-400 disabled:cursor-not-allowed disabled:bg-sky-500/60"
+        {error === "oauth_start_failed" && (
+          <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+            <p>
+              Could not start Google sign-in. In Supabase, enable the Google
+              provider and ensure your site URL and callback URL are
+              configured.
+            </p>
+            {reason && (
+              <p className="mt-2 break-words text-[11px] text-red-200/90">
+                Debug reason: <span className="font-mono">{reason}</span>
+              </p>
+            )}
+          </div>
+        )}
+
+
+        {error === "oauth_callback_failed" && (
+          <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+            <p>
+              Google sign-in returned to the app but session creation failed.
+              Check Supabase Auth callback URLs and provider settings.
+            </p>
+            {reason && (
+              <p className="mt-2 break-words text-[11px] text-red-200/90">
+                Callback debug reason: <span className="font-mono">{reason}</span>
+              </p>
+            )}
+          </div>
+        )}
+
+        <a
+          href="/auth/login"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-sky-500 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-sky-500/40 transition hover:bg-sky-400"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,8 +90,8 @@ function LoginInner() {
               d="M43.6 20.5H42V20H24v8h11.3a11.5 11.5 0 0 1-3.8 5l6.3 4.8A19.2 19.2 0 0 0 43.6 24a19.6 19.6 0 0 0-.1-3.5z"
             />
           </svg>
-          {loading ? "Redirecting to Google..." : "Continue with Google"}
-        </button>
+          Continue with Google
+        </a>
 
         <p className="mt-6 text-center text-[11px] text-slate-500">
           By continuing you confirm you have been granted superadmin access in
@@ -101,4 +110,3 @@ export default function LoginPage() {
     </Suspense>
   );
 }
-
