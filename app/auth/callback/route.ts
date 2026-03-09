@@ -28,19 +28,19 @@ export async function GET(request: NextRequest) {
     if (code) {
       const cookieStore = await cookies();
 
+      // Create the redirect response first so we can attach cookies to it.
+      // Setting cookies on the response we return ensures they're sent to the browser.
+      const response = NextResponse.redirect(`${origin}/admin`);
+
       const supabase = createServerClient(url, anonKey, {
         cookies: {
           getAll() {
             return cookieStore.getAll();
           },
           setAll(cookiesToSet) {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) =>
-                cookieStore.set(name, value, options)
-              );
-            } catch {
-              // Ignore in Server Components - Route Handler will apply
-            }
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options);
+            });
           },
         },
       });
@@ -52,6 +52,8 @@ export async function GET(request: NextRequest) {
         console.error("[auth/callback] Exchange error:", exchangeError);
         return NextResponse.redirect(`${origin}/login?error=config`);
       }
+
+      return response;
     }
 
     return NextResponse.redirect(`${origin}/admin`);
