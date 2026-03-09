@@ -2,6 +2,11 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  if (pathname === "/auth/login" || pathname === "/auth/callback") {
+    return NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
 
   const url =
