@@ -21,7 +21,7 @@
 - Activity Rate (combined daily activity)
 - Beautiful gradient cards with icons
 
-#### ✅ User/Profile Management (`/admin/users`)
+#### ✅ User/Profile Management (`/admin/profiles`)
 - **READ** - View all user profiles in a table
 - Shows: name, email, avatar, role (superadmin/user), creation date
 - Protected with `requireSuperadmin()`
@@ -52,7 +52,7 @@
 
 **Protected Routes:**
 - `/admin` - Dashboard
-- `/admin/users` - User list
+- `/admin/profiles` - User list
 - `/admin/images` - Image management
 - `/admin/images/new` - Create image
 - `/admin/images/[id]/edit` - Edit image
@@ -118,7 +118,7 @@ https://hello-vercel-2-n9ko.vercel.app
 - [ ] Test login with Google account
 - [ ] Set yourself as superadmin in Supabase
 - [ ] Test accessing `/admin` dashboard
-- [ ] Test viewing users at `/admin/users`
+- [ ] Test viewing users at `/admin/profiles`
 - [ ] Test creating an image at `/admin/images/new`
 - [ ] Test editing an image at `/admin/images/[id]/edit`
 - [ ] Test deleting an image
