@@ -97,6 +97,18 @@ In **Vercel → Project → Settings → Environment Variables**, set one of the
 
 Then click **Redeploy** for the latest deployment.
 
+### If clicking “Continue with Google” does nothing
+
+Open `/login?error=oauth_start_failed` handling notes:
+
+- In **Supabase → Authentication → Providers**, ensure **Google** is enabled and client ID/secret are set.
+- In **Supabase → Authentication → URL Configuration**, verify:
+  - **Site URL** is your deployed Vercel URL.
+  - **Redirect URLs** include `https://YOUR-PROJECT.vercel.app/auth/callback`.
+- Confirm the deployment has Supabase env vars in the same environment (Preview vs Production) and redeploy.
+
+In this app, failed OAuth initialization now redirects to `/login?error=oauth_start_failed&reason=...` so it is easier to distinguish provider/config issues from missing env vars and view a concrete error reason.
+
 ## Getting Started
 
 ```bash
