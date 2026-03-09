@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 
+const OAUTH_START_FAILED = "oauth_start_failed";
+
+function buildFailureRedirect(origin: string, reason: string) {
+  const url = new URL("/login", origin);
+  url.searchParams.set("error", OAUTH_START_FAILED);
+  url.searchParams.set("reason", reason.slice(0, 140));
+  return NextResponse.redirect(url);
+}
+
 export async function GET(request: NextRequest) {
   const origin = request.nextUrl.origin;
 
@@ -15,11 +24,13 @@ export async function GET(request: NextRequest) {
     });
 
     if (error || !data.url) {
-      return NextResponse.redirect(`${origin}/login?error=oauth_start_failed`);
+      const reason = error?.message || "No OAuth URL returned by Supabase";
+      return buildFailureRedirect(origin, reason);
     }
 
     return NextResponse.redirect(data.url);
-  } catch {
-    return NextResponse.redirect(`${origin}/login?error=oauth_start_failed`);
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : "Unexpected auth error";
+    return buildFailureRedirect(origin, reason);
   }
 }

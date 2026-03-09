@@ -107,7 +107,7 @@ Open `/login?error=oauth_start_failed` handling notes:
   - **Redirect URLs** include `https://YOUR-PROJECT.vercel.app/auth/callback`.
 - Confirm the deployment has Supabase env vars in the same environment (Preview vs Production) and redeploy.
 
-In this app, failed OAuth initialization now redirects to `/login?error=oauth_start_failed` so it is easier to distinguish provider/config issues from missing env vars.
+In this app, failed OAuth initialization now redirects to `/login?error=oauth_start_failed&reason=...` so it is easier to distinguish provider/config issues from missing env vars and view a concrete error reason.
 
 ## Getting Started
 

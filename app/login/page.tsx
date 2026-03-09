@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 function LoginInner() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+  const reason = searchParams.get("reason");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-950 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-4">
@@ -35,7 +36,16 @@ function LoginInner() {
 
         {error === "oauth_start_failed" && (
           <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
-            Could not start Google sign-in. In Supabase, enable the Google provider and ensure your site URL and callback URL are configured.
+            <p>
+              Could not start Google sign-in. In Supabase, enable the Google
+              provider and ensure your site URL and callback URL are
+              configured.
+            </p>
+            {reason && (
+              <p className="mt-2 break-words text-[11px] text-red-200/90">
+                Debug reason: <span className="font-mono">{reason}</span>
+              </p>
+            )}
           </div>
         )}
 
