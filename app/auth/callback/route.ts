@@ -49,9 +49,12 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(`${origin}/login?error=config`);
       }
 
-      const response = NextResponse.redirect(`${origin}/`);
+      const response = NextResponse.redirect(`${origin}/admin`);
       cookiesToSet.forEach(({ name, value, options }) =>
-        response.cookies.set(name, value, options)
+        response.cookies.set(name, value, {
+          path: "/",
+          ...(options as Record<string, unknown>),
+        })
       );
       return response;
     }
