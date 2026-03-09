@@ -91,11 +91,10 @@ export default async function AdminHomePage() {
             Dashboard
           </p>
           <h2 className="mt-3 text-3xl font-semibold text-white">
-            Database pulse &amp; community momentum
+            Overview
           </h2>
           <p className="mt-4 text-base leading-7 text-zinc-400">
-            Track the content pipeline, keep an eye on activity spikes, and
-            ensure only the best captions make the public feed.
+            View stats at a glance. Manage profiles, images, and captions from the quick links below.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {[

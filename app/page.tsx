@@ -6,12 +6,10 @@ export default function Home() {
           Humor Project Admin
         </div>
         <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
-          A quiet control room for captions, images, and the community behind
-          them.
+          Manage captions, images, and users in one place.
         </h1>
         <p className="max-w-2xl text-lg leading-8 text-zinc-400">
-          Sign in to review content, manage uploads, and monitor the humor
-          pipeline.
+          Sign in to review content, add or edit images, and moderate the community.
         </p>
         <a
           href="/login"
