@@ -17,7 +17,7 @@ export default async function AdminDashboard() {
     const authResult = await requireSuperadmin();
     profile = authResult.profile;
     supabase = await getSupabaseServerClient();
-  } catch (error: any) {
+  } catch {
     // If auth fails, redirect to login
     redirect("/login");
   }
