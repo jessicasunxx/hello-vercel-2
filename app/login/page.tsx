@@ -33,6 +33,22 @@ function LoginInner() {
           </div>
         )}
 
+        {error === "oauth" && (
+          <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+            OAuth error occurred. Please ensure the redirect URL is configured in Supabase:
+            <br />
+            <span className="font-mono mt-1 block">
+              {typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : "/auth/callback"}
+            </span>
+          </div>
+        )}
+
+        {error && error !== "not_authorized" && error !== "config" && error !== "oauth" && (
+          <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+            Error: {error}
+          </div>
+        )}
+
         <a
           href="/auth/login"
           className="flex w-full items-center justify-center gap-2 rounded-full bg-sky-500 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-sky-500/40 transition hover:bg-sky-400"
