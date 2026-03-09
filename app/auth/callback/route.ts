@@ -50,12 +50,16 @@ export async function GET(request: NextRequest) {
       }
 
       const response = NextResponse.redirect(`${origin}/admin`);
-      cookiesToSet.forEach(({ name, value, options }) =>
+      cookiesToSet.forEach(({ name, value, options }) => {
+        const opts = options as { maxAge?: number; httpOnly?: boolean; secure?: boolean; sameSite?: string } | undefined;
         response.cookies.set(name, value, {
           path: "/",
-          ...(options as Record<string, unknown>),
-        })
-      );
+          maxAge: opts?.maxAge ?? 60 * 60 * 24 * 7,
+          httpOnly: opts?.httpOnly ?? true,
+          secure: true,
+          sameSite: "lax",
+        });
+      });
       return response;
     }
 

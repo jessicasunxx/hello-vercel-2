@@ -34,6 +34,36 @@ function LoginInner() {
           </div>
         )}
 
+        {error === "session_missing" && (
+          <div className="mb-4 rounded-lg border border-amber-500/50 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
+            <p className="font-semibold">Session not persisting after sign-in</p>
+            <p className="mt-1">
+              This usually means cookies aren&apos;t being set correctly. Check:
+            </p>
+            <ul className="mt-2 list-inside list-disc space-y-1">
+              <li>
+                Supabase → Authentication → URL Configuration → Redirect URLs
+                must include{" "}
+                <span className="font-mono">
+                  https://YOUR-VERCEL-URL.vercel.app/auth/callback
+                </span>
+              </li>
+              <li>
+                Visit{" "}
+                <a
+                  href="/api/auth/status"
+                  className="underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  /api/auth/status
+                </a>{" "}
+                after signing in to debug
+              </li>
+            </ul>
+          </div>
+        )}
+
         {error === "oauth_start_failed" && (
           <div className="mb-4 rounded-lg border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
             <p>

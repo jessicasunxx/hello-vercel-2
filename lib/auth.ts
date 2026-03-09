@@ -18,7 +18,7 @@ export async function requireSuperadmin() {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    redirect("/login");
+    redirect("/login?error=session_missing");
   }
 
   const { data: profile, error: profileError } = await supabase
