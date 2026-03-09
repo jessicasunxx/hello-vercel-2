@@ -86,14 +86,14 @@ export default async function AdminHomePage() {
   return (
     <div className="space-y-12">
       <section className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-        <div className="rounded-3xl border border-black/10 bg-white/85 p-8 shadow-lg">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#6b5f57]">
+        <div className="rounded-2xl border border-white/10 bg-zinc-900/60 p-8 shadow-xl">
+          <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80">
             Dashboard
           </p>
-          <h2 className="mt-3 text-3xl font-semibold text-[#151515]">
+          <h2 className="mt-3 text-3xl font-semibold text-white">
             Database pulse &amp; community momentum
           </h2>
-          <p className="mt-4 text-base leading-7 text-[#6b5f57]">
+          <p className="mt-4 text-base leading-7 text-zinc-400">
             Track the content pipeline, keep an eye on activity spikes, and
             ensure only the best captions make the public feed.
           </p>
@@ -105,23 +105,23 @@ export default async function AdminHomePage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-black/10 bg-[#fef6f1] p-4"
+                className="rounded-xl border border-white/10 bg-zinc-800/50 p-4"
               >
-                <p className="text-xs uppercase tracking-[0.25em] text-[#6b5f57]">
+                <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
                   {stat.label}
                 </p>
-                <p className="text-2xl font-semibold text-[#151515]">
+                <p className="mt-1 text-2xl font-semibold text-white">
                   {stat.value}
                 </p>
               </div>
             ))}
           </div>
         </div>
-        <div className="rounded-3xl border border-black/10 bg-[#101213] p-6 text-white shadow-lg">
-          <p className="text-xs uppercase tracking-[0.35em] text-white/60">
+        <div className="rounded-2xl border border-white/10 bg-zinc-900/80 p-6 shadow-xl">
+          <p className="text-xs uppercase tracking-[0.35em] text-cyan-400/80">
             Quick Links
           </p>
-          <div className="mt-6 space-y-4">
+          <div className="mt-6 space-y-3">
             {[
               { href: "/admin/profiles", label: "Review profiles" },
               { href: "/admin/images", label: "Manage images" },
@@ -130,10 +130,10 @@ export default async function AdminHomePage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center justify-between rounded-2xl border border-white/15 px-4 py-3 text-sm uppercase tracking-[0.2em] text-white/80 transition hover:border-white/40 hover:text-white"
+                className="flex items-center justify-between rounded-xl border border-white/10 px-4 py-3 text-sm uppercase tracking-[0.2em] text-zinc-400 transition hover:border-cyan-500/30 hover:bg-cyan-500/5 hover:text-cyan-400"
               >
                 {link.label}
-                <span aria-hidden>-&gt;</span>
+                <span aria-hidden className="text-cyan-400/60">→</span>
               </Link>
             ))}
           </div>
@@ -160,44 +160,44 @@ export default async function AdminHomePage() {
         ].map((stat) => (
           <div
             key={stat.label}
-            className="rounded-3xl border border-black/10 bg-white/85 p-6 shadow-md"
+            className="rounded-2xl border border-white/10 bg-zinc-900/60 p-6 shadow-lg"
           >
-            <p className="text-xs uppercase tracking-[0.3em] text-[#6b5f57]">
+            <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
               {stat.label}
             </p>
-            <p className="mt-3 text-3xl font-semibold text-[#151515]">
+            <p className="mt-3 text-3xl font-semibold text-white">
               {stat.value}
             </p>
-            <p className="mt-2 text-sm text-[#6b5f57]">{stat.note}</p>
+            <p className="mt-2 text-sm text-zinc-500">{stat.note}</p>
           </div>
         ))}
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-black/10 bg-white/85 p-6 shadow-md">
-          <h3 className="text-lg font-semibold text-[#151515]">
+        <div className="rounded-2xl border border-white/10 bg-zinc-900/60 p-6 shadow-lg">
+          <h3 className="text-lg font-semibold text-white">
             Recent image uploads
           </h3>
           <div className="mt-4 space-y-3">
             {highlights.recentImages.length === 0 ? (
-              <p className="text-sm text-[#6b5f57]">No images yet.</p>
+              <p className="text-sm text-zinc-500">No images yet.</p>
             ) : (
               highlights.recentImages.map((image) => (
                 <div
                   key={image.id}
-                  className="flex items-center justify-between rounded-2xl border border-black/10 bg-white p-3"
+                  className="flex items-center justify-between rounded-xl border border-white/10 bg-zinc-800/50 p-3"
                 >
                   <div>
-                    <p className="text-sm font-semibold text-[#151515]">
+                    <p className="text-sm font-semibold text-white">
                       <span className="block max-w-[320px] truncate">
                         {formatImageLabel(image.url)}
                       </span>
                     </p>
-                    <p className="text-xs text-[#6b5f57]">
+                    <p className="text-xs text-zinc-500">
                       {image.created_datetime_utc}
                     </p>
                   </div>
-                  <span className="rounded-full border border-black/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-[#6b5f57]">
+                  <span className="rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
                     {image.is_public ? "Public" : "Private"}
                   </span>
                 </div>
@@ -205,23 +205,23 @@ export default async function AdminHomePage() {
             )}
           </div>
         </div>
-        <div className="rounded-3xl border border-black/10 bg-white/85 p-6 shadow-md">
-          <h3 className="text-lg font-semibold text-[#151515]">
+        <div className="rounded-2xl border border-white/10 bg-zinc-900/60 p-6 shadow-lg">
+          <h3 className="text-lg font-semibold text-white">
             Latest captions
           </h3>
           <div className="mt-4 space-y-3">
             {highlights.recentCaptions.length === 0 ? (
-              <p className="text-sm text-[#6b5f57]">No captions yet.</p>
+              <p className="text-sm text-zinc-500">No captions yet.</p>
             ) : (
               highlights.recentCaptions.map((caption) => (
                 <div
                   key={caption.id}
-                  className="rounded-2xl border border-black/10 bg-white p-3"
+                  className="rounded-xl border border-white/10 bg-zinc-800/50 p-3"
                 >
-                  <p className="text-sm font-semibold text-[#151515]">
+                  <p className="text-sm font-semibold text-white">
                     {caption.content || "Untitled caption"}
                   </p>
-                  <div className="mt-2 flex items-center justify-between text-xs text-[#6b5f57]">
+                  <div className="mt-2 flex items-center justify-between text-xs text-zinc-500">
                     <span>{caption.created_datetime_utc}</span>
                     <span>{caption.like_count ?? 0} likes</span>
                   </div>

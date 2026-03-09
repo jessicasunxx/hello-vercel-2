@@ -30,22 +30,22 @@ export default function LoginCard() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-3xl border border-black/10 bg-white/85 p-8 shadow-xl">
+    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/80 p-8 shadow-2xl backdrop-blur-sm">
       <div className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#6b5f57]">
+        <p className="text-xs uppercase tracking-[0.3em] text-cyan-400/80">
           Secure Access
         </p>
-        <h1 className="text-3xl font-semibold text-[#151515]">
+        <h1 className="text-3xl font-semibold text-white">
           Sign in with Google
         </h1>
-        <p className="text-sm leading-6 text-[#6b5f57]">
+        <p className="text-sm leading-6 text-zinc-400">
           Admin access is limited to verified superadmins.
         </p>
       </div>
       <button
         type="button"
         onClick={handleLogin}
-        className="mt-8 w-full rounded-full bg-[#151515] px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#f9f4ef] transition hover:bg-[#2f2f2f] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-8 w-full rounded-xl bg-cyan-500/20 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400 transition hover:bg-cyan-500/30 disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isLoading}
       >
         {isLoading ? "Redirecting..." : "Continue with Google"}
@@ -53,7 +53,7 @@ export default function LoginCard() {
       <button
         type="button"
         onClick={handleReturn}
-        className="mt-4 w-full rounded-full border border-black/15 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#151515] transition hover:border-black/30 hover:bg-white/70"
+        className="mt-4 w-full rounded-xl border border-white/10 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-400 transition hover:border-white/20 hover:bg-white/5 hover:text-zinc-300"
       >
         Back to landing
       </button>

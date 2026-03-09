@@ -24,18 +24,18 @@ export default async function AdminLayout({
       : adminCheck.profile.email ?? "Superadmin";
 
   return (
-    <div className="min-h-screen text-[#151515]">
-      <header className="sticky top-0 z-10 border-b border-black/10 bg-[#101213]">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 text-white">
+    <div className="min-h-screen text-zinc-100">
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-zinc-950/95 backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-white/60">
+            <p className="text-xs uppercase tracking-[0.35em] text-cyan-400/70">
               Humor Project
             </p>
-            <h1 className="text-xl font-semibold">Admin Deck</h1>
+            <h1 className="text-xl font-semibold text-white">Admin Deck</h1>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <div className="rounded-full border border-white/20 px-4 py-2">
-              <p className="text-[10px] uppercase tracking-[0.35em] text-white/60">
+            <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-zinc-500">
                 Signed in
               </p>
               <p className="text-sm font-semibold text-white">{displayName}</p>

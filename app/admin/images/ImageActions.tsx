@@ -30,9 +30,9 @@ export default function ImageActions({
   return (
     <details
       ref={detailsRef}
-      className="mt-4 rounded-2xl border border-black/10 bg-white/70 p-4"
+      className="mt-4 rounded-xl border border-white/10 bg-zinc-800/50 p-4"
     >
-      <summary className="cursor-pointer text-xs font-semibold uppercase tracking-[0.25em] text-[#151515]">
+      <summary className="cursor-pointer text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400/90">
         Edit or delete
       </summary>
       <form
@@ -41,30 +41,30 @@ export default function ImageActions({
         onSubmit={closeDetails}
       >
         <input type="hidden" name="id" value={image.id} />
-        <label className="text-sm text-[#6b5f57]">
+        <label className="text-sm text-zinc-400">
           Image URL
           <input
             name="url"
             defaultValue={image.url ?? ""}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-[#151515]"
+            className="mt-2 w-full rounded-xl border border-white/10 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
           />
         </label>
-        <label className="text-sm text-[#6b5f57] lg:col-span-2">
+        <label className="text-sm text-zinc-400 lg:col-span-2">
           Image description
           <textarea
             name="image_description"
             defaultValue={image.image_description ?? ""}
-            className="mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-[#151515]"
+            className="mt-2 w-full rounded-xl border border-white/10 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
             rows={2}
           />
         </label>
-        <div className="flex flex-wrap gap-4 text-sm text-[#6b5f57]">
+        <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
               name="is_public"
               defaultChecked={image.is_public ?? false}
-              className="h-4 w-4 rounded border-black/20"
+              className="h-4 w-4 rounded border-white/20 bg-zinc-800 text-cyan-500 focus:ring-cyan-500/50"
             />
             Public
           </label>
@@ -73,7 +73,7 @@ export default function ImageActions({
               type="checkbox"
               name="is_common_use"
               defaultChecked={image.is_common_use ?? false}
-              className="h-4 w-4 rounded border-black/20"
+              className="h-4 w-4 rounded border-white/20 bg-zinc-800 text-cyan-500 focus:ring-cyan-500/50"
             />
             Common use
           </label>
@@ -81,7 +81,7 @@ export default function ImageActions({
         <div className="flex flex-wrap gap-3">
           <button
             type="submit"
-            className="rounded-full border border-black/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#151515] transition hover:border-black/30 hover:bg-white/70"
+            className="rounded-xl border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-400 transition hover:border-white/20 hover:bg-white/5 hover:text-white"
           >
             Save changes
           </button>
@@ -92,7 +92,7 @@ export default function ImageActions({
         <input type="hidden" name="id" value={image.id} />
         <button
           type="submit"
-          className="rounded-full border border-red-500/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-red-600 transition hover:border-red-500/70 hover:bg-red-50"
+          className="rounded-xl border border-red-500/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-red-400 transition hover:border-red-500/50 hover:bg-red-500/10"
         >
           Delete image
         </button>

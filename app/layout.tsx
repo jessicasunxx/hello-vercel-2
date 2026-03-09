@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Fraunces, Space_Mono } from "next/font/google";
+import { JetBrains_Mono, Sora } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const sora = Sora({
   variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const spaceMono = Space_Mono({
+const jetbrains = JetBrains_Mono({
   variable: "--font-code",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -24,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${fraunces.variable} ${spaceMono.variable} antialiased`}>
+    <html lang="en" className="dark">
+      <body className={`${sora.variable} ${jetbrains.variable} antialiased`}>
         {children}
       </body>
     </html>
