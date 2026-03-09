@@ -109,18 +109,6 @@ Open `/login?error=oauth_start_failed` handling notes:
 
 In this app, failed OAuth initialization now redirects to `/login?error=oauth_start_failed&reason=...` so it is easier to distinguish provider/config issues from missing env vars and view a concrete error reason.
 
-
-### If Google sign-in returns you straight back to `/login`
-
-This usually means OAuth callback happened, but the app could not create/persist a session.
-
-- Check `/login?error=oauth_callback_failed&reason=...` for the exact callback failure reason.
-- In **Supabase → Authentication → URL Configuration**, ensure callback URLs include:
-  - `https://YOUR-PROJECT.vercel.app/auth/callback`
-  - `http://localhost:3000/auth/callback` (for local dev)
-- Confirm Google OAuth credentials in **Supabase → Authentication → Providers → Google**.
-- Confirm your deployed Vercel environment has the expected Supabase variables and redeploy after changes.
-
 ## Getting Started
 
 ```bash
