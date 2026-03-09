@@ -72,3 +72,31 @@ export async function GET(request: NextRequest) {
   }
 }
 
+    if (!code) {
+      return redirectToLoginWithReason(origin, "Missing OAuth authorization code");
+    }
+
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (exchangeError) {
+      return redirectToLoginWithReason(origin, exchangeError.message);
+    }
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return redirectToLoginWithReason(
+        origin,
+        userError?.message || "Session was not persisted after OAuth callback",
+      );
+    }
+
+    return NextResponse.redirect(`${origin}/admin`);
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : "OAuth callback handler failed";
+    return redirectToLoginWithReason(origin, reason);
+  }
+}
