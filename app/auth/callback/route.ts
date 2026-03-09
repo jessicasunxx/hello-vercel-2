@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -25,18 +26,21 @@ export async function GET(request: NextRequest) {
     }
 
     if (code) {
-      const cookiesToSet: { name: string; value: string; options?: object }[] =
-        [];
+      const cookieStore = await cookies();
 
       const supabase = createServerClient(url, anonKey, {
         cookies: {
           getAll() {
-            return request.cookies.getAll();
+            return cookieStore.getAll();
           },
-          setAll(cookies) {
-            cookies.forEach(({ name, value, options }) =>
-              cookiesToSet.push({ name, value, options })
-            );
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              );
+            } catch {
+              // Ignore in Server Components - Route Handler will apply
+            }
           },
         },
       });
@@ -48,22 +52,9 @@ export async function GET(request: NextRequest) {
         console.error("[auth/callback] Exchange error:", exchangeError);
         return NextResponse.redirect(`${origin}/login?error=config`);
       }
-
-      const response = NextResponse.redirect(`${origin}/admin`);
-      cookiesToSet.forEach(({ name, value, options }) => {
-        const opts = options as { maxAge?: number; httpOnly?: boolean; secure?: boolean; sameSite?: string } | undefined;
-        response.cookies.set(name, value, {
-          path: "/",
-          maxAge: opts?.maxAge ?? 60 * 60 * 24 * 7,
-          httpOnly: opts?.httpOnly ?? true,
-          secure: true,
-          sameSite: "lax",
-        });
-      });
-      return response;
     }
 
-    return NextResponse.redirect(`${origin}/login`);
+    return NextResponse.redirect(`${origin}/admin`);
   } catch (err) {
     console.error("[auth/callback] Exception:", err);
     return NextResponse.redirect(
