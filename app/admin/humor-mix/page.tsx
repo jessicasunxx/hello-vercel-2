@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import GenericDataTable from "../GenericDataTable";
+import { updateHumorMix } from "./actions";
+import HumorMixRow from "./HumorMixRow";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,8 @@ export default async function HumorMixPage() {
     .from("humor_mix")
     .select("*")
     .order("id");
+
+  const rows = (data ?? []) as Record<string, unknown>[];
 
   return (
     <div className="space-y-8">
@@ -29,11 +32,31 @@ export default async function HumorMixPage() {
           Dashboard
         </Link>
       </header>
-      <GenericDataTable
-        title="humor_mix"
-        data={data}
-        error={error?.message ?? null}
-      />
+
+      {error && (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-200/80">
+          {error.message}
+        </div>
+      )}
+
+      <section className="space-y-4">
+        {rows.map((row, i) => (
+          <HumorMixRow
+            key={safeKey(row)}
+            row={row}
+            updateHumorMix={updateHumorMix}
+          />
+        ))}
+        {rows.length === 0 && !error && (
+          <p className="text-sm text-zinc-500">No humor mix rows yet.</p>
+        )}
+      </section>
     </div>
   );
+}
+
+function safeKey(row: Record<string, unknown>): string {
+  const id = row.id;
+  if (id != null && typeof id === "string") return id;
+  return String(JSON.stringify(row));
 }

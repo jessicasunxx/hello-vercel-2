@@ -37,14 +37,29 @@ export default async function ImagesPage() {
         <h3 className="text-lg font-semibold text-white">
           Add a new image
         </h3>
-        <form action={createImage} className="mt-4 grid gap-4 lg:grid-cols-2">
+        <p className="mt-1 text-sm text-zinc-500">
+          Upload a file or paste an image URL.
+        </p>
+        <form
+          action={createImage}
+          className="mt-4 grid gap-4 lg:grid-cols-2"
+          encType="multipart/form-data"
+        >
           <label className="text-sm text-zinc-400">
-            Image URL
+            Upload image
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              className="mt-2 block w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white file:mr-4 file:rounded-lg file:border-0 file:bg-cyan-500/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-cyan-400 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+            />
+          </label>
+          <label className="text-sm text-zinc-400">
+            Or image URL
             <input
               name="url"
               className="mt-2 w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white placeholder-zinc-500 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
               placeholder="https://..."
-              required
             />
           </label>
           <label className="text-sm text-zinc-400 lg:col-span-2">

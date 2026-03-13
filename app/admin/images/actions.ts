@@ -8,16 +8,37 @@ function normalizeCheckbox(value: FormDataEntryValue | null) {
   return value === "on";
 }
 
+const IMAGE_BUCKET = "images";
+
 export async function createImage(formData: FormData) {
   const adminCheck = await requireAdmin();
   if (!adminCheck.ok) {
     throw new Error("Not authorized to create images.");
   }
 
-  const url = (formData.get("url") as string | null)?.trim() || null;
-  if (!url) {
-    throw new Error("Image URL is required.");
+  let url = (formData.get("url") as string | null)?.trim() || null;
+  const file = formData.get("file") as File | null;
+
+  if (file && file.size > 0) {
+    const supabase = await createSupabaseServerClient();
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
+    const { error: uploadError } = await supabase.storage
+      .from(IMAGE_BUCKET)
+      .upload(path, file, { upsert: false, contentType: file.type });
+    if (uploadError) {
+      throw new Error(`Upload failed: ${uploadError.message}`);
+    }
+    const { data: urlData } = supabase.storage
+      .from(IMAGE_BUCKET)
+      .getPublicUrl(path);
+    url = urlData.publicUrl;
   }
+
+  if (!url) {
+    throw new Error("Provide an image URL or upload a file.");
+  }
+
   const imageDescription =
     (formData.get("image_description") as string | null)?.trim() || null;
   const isPublic = normalizeCheckbox(formData.get("is_public"));
