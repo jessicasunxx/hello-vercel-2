@@ -125,6 +125,21 @@ export default async function AdminHomePage() {
               { href: "/admin/profiles", label: "Review profiles" },
               { href: "/admin/images", label: "Manage images" },
               { href: "/admin/captions", label: "Audit captions" },
+              { href: "/admin/caption-requests", label: "Caption requests" },
+              { href: "/admin/caption-examples", label: "Caption examples" },
+              { href: "/admin/humor-flavors", label: "Humor flavors" },
+              { href: "/admin/humor-flavor-steps", label: "Humor flavor steps" },
+              { href: "/admin/humor-mix", label: "Humor mix" },
+              { href: "/admin/terms", label: "Terms" },
+              { href: "/admin/llm-models", label: "LLM models" },
+              { href: "/admin/llm-providers", label: "LLM providers" },
+              { href: "/admin/llm-prompt-chains", label: "LLM prompt chains" },
+              { href: "/admin/llm-responses", label: "LLM responses" },
+              { href: "/admin/allowed-domains", label: "Allowed signup domains" },
+              {
+                href: "/admin/whitelisted-emails",
+                label: "Whitelisted emails",
+              },
             ].map((link) => (
               <Link
                 key={link.href}
