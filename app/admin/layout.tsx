@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import ThemeToggle from "@/components/theme-toggle";
 import { requireAdmin } from "@/lib/supabase/require-admin";
 import SignOutButton from "./SignOutButton";
 
@@ -33,7 +34,8 @@ export default async function AdminLayout({
             </p>
             <h1 className="text-xl font-semibold text-white">Admin Deck</h1>
           </div>
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex flex-wrap items-center gap-4 text-sm">
+            <ThemeToggle />
             <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2">
               <p className="text-[10px] uppercase tracking-[0.35em] text-zinc-500">
                 Signed in

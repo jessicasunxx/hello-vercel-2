@@ -9,8 +9,9 @@ export default function DeniedPage() {
           You do not have permission to access this admin area.
         </h1>
         <p className="max-w-xl text-base leading-7 text-zinc-400">
-          If you believe you should have access, ask an existing superadmin to
-          grant it in Supabase or update your profile.
+          Superadmin or matrix admin access is required. If you believe you
+          should have access, ask an existing superadmin to grant it in
+          Supabase or update your profile.
         </p>
         <a
           href="/login"
