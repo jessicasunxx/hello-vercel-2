@@ -7,7 +7,6 @@ type AdminProfile = {
   first_name: string | null;
   last_name: string | null;
   is_superadmin: boolean;
-  is_matrix_admin: boolean;
 };
 
 type AdminCheck =
@@ -26,7 +25,7 @@ export async function requireAdmin(): Promise<AdminCheck> {
 
   const { data: profile, error } = await supabase
     .from("profiles")
-    .select("id, email, first_name, last_name, is_superadmin, is_matrix_admin")
+    .select("id, email, first_name, last_name, is_superadmin")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -34,10 +33,7 @@ export async function requireAdmin(): Promise<AdminCheck> {
     return { ok: false, reason: "missing-profile" };
   }
 
-  const isElevated =
-    Boolean(profile.is_superadmin) || Boolean(profile.is_matrix_admin);
-
-  if (!isElevated) {
+  if (!profile.is_superadmin) {
     return { ok: false, reason: "unauthorized" };
   }
 
