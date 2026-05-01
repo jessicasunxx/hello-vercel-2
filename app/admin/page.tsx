@@ -125,6 +125,7 @@ export default async function AdminHomePage() {
               { href: "/admin/profiles", label: "Review profiles" },
               { href: "/admin/images", label: "Manage images" },
               { href: "/admin/captions", label: "Audit captions" },
+              { href: "/admin/caption-stats", label: "Caption rating stats" },
               { href: "/admin/caption-requests", label: "Caption requests" },
               { href: "/admin/caption-examples", label: "Caption examples" },
               { href: "/admin/prompt-chain", label: "Prompt chain (flavors)" },
